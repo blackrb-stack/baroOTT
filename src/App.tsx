@@ -21,15 +21,11 @@ interface Content {
 // 포스터는 해당 YouTube 영상의 썸네일을 사용 (항상 존재하는 이미지)
 const thumb = (id: string) => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
 
-// 2026-11-28 기준 임베드 재생 가능 여부를 확인한 목록
+// 2026-11-28 기준 한국에서 임베드 재생(연령 제한·지역 차단 없음)을 직접 확인한 목록
 const contents: Content[] = [
   // ── 한국: 한국영상자료원 공식 채널(한국고전영화) ──
-  { id: 1, title: 'Homebound', titleLocal: '귀로', country: 'KR', countryName: '한국', year: 1967, duration: '91분', genre: ['멜로', '고전'], description: '이만희 감독의 1967년작. 전쟁의 상처를 안은 부부의 이야기를 그린 멜로드라마.', videoId: 'CoIzk2usMMg', source: '한국고전영화 Korean Classic Film', license: 'official', type: 'movie' },
   { id: 2, title: "Sisters' Garden", titleLocal: '자매의 화원', country: 'KR', countryName: '한국', year: 1959, duration: '120분', genre: ['멜로', '고전', '4K'], description: '신상옥 감독의 1959년작 멜로드라마. 4K 복원판.', videoId: 'AxraJIX5PQI', source: '한국고전영화 Korean Classic Film', license: 'official', type: 'movie' },
   { id: 3, title: 'A Happy Businesswoman', titleLocal: '또순이', country: 'KR', countryName: '한국', year: 1963, duration: '93분', genre: ['코미디', '고전'], description: '부제 "행복의 탄생". 억척스럽고 생활력 강한 여성 또순이의 성공기를 그린 코미디.', videoId: 'hc2BqMbb2EA', source: '한국고전영화 Korean Classic Film', license: 'official', type: 'movie' },
-  { id: 4, title: 'Mr. Park', titleLocal: '박서방', country: 'KR', countryName: '한국', year: 1960, duration: '139분', genre: ['가족', '고전'], description: '김승호 주연. 연탄 배달로 가족을 키운 아버지와 자식 세대의 갈등을 그린 가족 드라마.', videoId: 'GTjIZvR6M0M', source: '한국고전영화 Korean Classic Film', license: 'official', type: 'movie' },
-  { id: 5, title: 'The Gingko Bed', titleLocal: '은행나무 침대', country: 'KR', countryName: '한국', year: 1995, duration: '88분', genre: ['판타지', '멜로', '4K'], description: '강제규 감독 데뷔작. 천 년의 시간을 넘어 이어지는 사랑을 그린 판타지 멜로. 4K 복원판.', videoId: '_1qpiMzEvrA', source: '한국고전영화 Korean Classic Film', license: 'official', type: 'movie' },
-  { id: 6, title: 'To the Starry Island', titleLocal: '그 섬에 가고싶다', country: 'KR', countryName: '한국', year: 1993, duration: '100분', genre: ['드라마', '4K'], description: '박광수 감독작. 한 섬마을 사람들의 삶과 아픈 역사를 담은 드라마. 4K 복원판.', videoId: 'Y6D136RHiVc', source: '한국고전영화 Korean Classic Film', license: 'official', type: 'movie' },
 
   // ── 한국: 방송사 공식 채널 (몰아보기·요약본) ──
   { id: 7, title: 'Jewel in the Palace (Ep.1-4)', titleLocal: '대장금 1~4회 몰아보기', country: 'KR', countryName: '한국', year: 2003, duration: '150분', genre: ['사극', '드라마'], description: 'MBC 사극 「대장금」 1~4회를 이어 붙인 공식 몰아보기 영상.', videoId: 'JzAOM5EvsX4', source: '옛드 (MBC 공식)', license: 'official', type: 'drama' },
@@ -38,9 +34,7 @@ const contents: Content[] = [
   { id: 10, title: 'Stairway to Heaven (Ep.1-6 요약)', titleLocal: '천국의 계단 1~6회 정주행', country: 'KR', countryName: '한국', year: 2003, duration: '64분', genre: ['멜로', '드라마'], description: 'SBS 드라마 「천국의 계단」 1~6회를 한 번에 보는 공식 요약 영상.', videoId: 'aasYVxGlXds', source: 'SBS', license: 'official', type: 'drama' },
 
   // ── 중국: 제작사·플랫폼 공식 채널 ──
-  { id: 11, title: 'Story of Yanxi Palace EP01', titleLocal: '연희공략 1화', country: 'CN', countryName: '중국', year: 2018, duration: '45분', genre: ['사극', '궁중'], description: '청나라 궁궐에 들어간 궁녀 위영락의 이야기. 제작사 공식 채널 영어자막판 1화.', videoId: 'uCLoJTZ8YXg', source: '欢娱影视 China Huanyu Ent. (공식)', license: 'official', type: 'drama' },
   { id: 12, title: 'The Untamed EP01', titleLocal: '진정령 1화', country: 'CN', countryName: '중국', year: 2019, duration: '42분', genre: ['판타지', '무협'], description: '샤오잔·왕이보 주연 무협 판타지. 텐센트 공식 채널 영어자막판 1화.', videoId: 'BfKhREVFLkQ', source: '腾讯视频 WeTV (공식)', license: 'official', type: 'drama' },
-  { id: 13, title: 'Word of Honor EP01', titleLocal: '산하령 1화', country: 'CN', countryName: '중국', year: 2021, duration: '44분', genre: ['무협', '드라마'], description: '장철한·공준 주연 무협 드라마. 유쿠 공식 채널 영어자막판 1화.', videoId: '1Vf7l1_M8Tw', source: 'YOUKU English (공식)', license: 'official', type: 'drama' },
 
   // ── 미국: 저작권 만료(퍼블릭 도메인) 고전 영화 ──
   { id: 14, title: 'Night of the Living Dead', titleLocal: '살아있는 시체들의 밤', country: 'US', countryName: '미국', year: 1968, duration: '95분', genre: ['호러', '고전'], description: '조지 A. 로메로 감독의 좀비 영화 원조. 저작권이 만료된 퍼블릭 도메인 작품.', videoId: 'H91BxkBXttE', source: 'Timeless Classic Movies', license: 'public-domain', type: 'movie' },
