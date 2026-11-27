@@ -9,314 +9,50 @@ interface Content {
   country: 'US' | 'KR' | 'CN';
   countryName: string;
   year: number;
-  rating: number;
   duration: string;
   genre: string[];
   description: string;
-  poster: string;
-  videoId: string; // YouTube video ID
-  platform: string;
-  type: 'movie' | 'drama' | 'variety' | 'anime';
+  videoId: string; // YouTube 영상 ID (공식 채널 또는 저작권 만료 작품)
+  source: string; // 업로드한 YouTube 채널
+  license: 'official' | 'public-domain';
+  type: 'movie' | 'drama';
 }
 
+// 포스터는 해당 YouTube 영상의 썸네일을 사용 (항상 존재하는 이미지)
+const thumb = (id: string) => `https://i.ytimg.com/vi/${id}/hqdefault.jpg`;
+
+// 2026-11-28 기준 임베드 재생 가능 여부를 확인한 목록
 const contents: Content[] = [
-  // 미국 콘텐츠
-  {
-    id: 1,
-    title: 'Stranger Things',
-    titleLocal: '스트레인저 씽스',
-    country: 'US',
-    countryName: '미국',
-    year: 2022,
-    rating: 8.7,
-    duration: '55분/에피소드',
-    genre: ['SF', '호러', '드라마'],
-    description: '작은 마을에서 사라진 소년과 기이한 사건들. 우정, 비밀, 초자연적 현상이 뒤섞인 모험.',
-    poster: 'https://image.tmdb.org/t/p/w500/56v2KjBlYj0Qp89kdFSMiXJaFyT.jpg',
-    videoId: 'b9EkMc79ZSU',
-    platform: 'Netflix',
-    type: 'drama'
-  },
-  {
-    id: 2,
-    title: 'The Witcher',
-    titleLocal: '위쳐',
-    country: 'US',
-    countryName: '미국',
-    year: 2023,
-    rating: 8.2,
-    duration: '60분/에피소드',
-    genre: ['판타지', '액션', '모험'],
-    description: '변이된 몬스터 헌터 리비아의 게랄트가 운명에 얽힌 인물들과 만나며 펼쳐지는 대륙의 이야기.',
-    poster: 'https://image.tmdb.org/t/p/w500/7vjaCdMw15FEbXyLQTVa04URsPm.jpg',
-    videoId: 'ndl1W4ltcmg',
-    platform: 'Netflix',
-    type: 'drama'
-  },
-  {
-    id: 3,
-    title: 'Wednesday',
-    titleLocal: '웬즈데이',
-    country: 'US',
-    countryName: '미국',
-    year: 2022,
-    rating: 8.1,
-    duration: '45분/에피소드',
-    genre: ['미스터리', '코미디', '판타지'],
-    description: '애덤스 패밀리의 딸 웬즈데이 애덤스가 네버모어 아카데미에서 벌이는 미스터리와 성장 이야기.',
-    poster: 'https://image.tmdb.org/t/p/w500/9PFonBhy4cQy7Jz20NpMygczOkv.jpg',
-    videoId: 'Di310WS8zLk',
-    platform: 'Netflix',
-    type: 'drama'
-  },
-  {
-    id: 4,
-    title: 'The Mandalorian',
-    titleLocal: '만달로리안',
-    country: 'US',
-    countryName: '미국',
-    year: 2023,
-    rating: 8.7,
-    duration: '40분/에피소드',
-    genre: ['SF', '액션', '모험'],
-    description: '은하계의 외진 곳에서 한 현상금 사냥꾼이 아기 그로그와 함께 떠나는 모험.',
-    poster: 'https://image.tmdb.org/t/p/w500/sWgBv7LV2PRoQgkxwlibdUBGzRi.jpg',
-    videoId: 'aOC8E8z_ifw',
-    platform: 'Disney+',
-    type: 'drama'
-  },
-  {
-    id: 5,
-    title: 'House of the Dragon',
-    titleLocal: '하우스 오브 드래곤',
-    country: 'US',
-    countryName: '미국',
-    year: 2024,
-    rating: 8.4,
-    duration: '60분/에피소드',
-    genre: ['판타지', '드라마', '액션'],
-    description: '게임 오브 스론스 200년 전, 타르가리안 가문의 피비린내 나는 내전 이야기.',
-    poster: 'https://image.tmdb.org/t/p/w500/z2yahl2uefxDCl0nogcRBstwruJ.jpg',
-    videoId: 'DotnHvMvVl8',
-    platform: 'Max',
-    type: 'drama'
-  },
-  {
-    id: 6,
-    title: 'The Last of Us',
-    titleLocal: '라스트 오브 어스',
-    country: 'US',
-    countryName: '미국',
-    year: 2023,
-    rating: 8.8,
-    duration: '55분/에피소드',
-    genre: ['드라마', 'SF', '스릴러'],
-    description: '문명 붕괴 후 살아남은 조엘과 엘리의 생존 여정. 희망과 절망이 교차하는 감동 서사.',
-    poster: 'https://image.tmdb.org/t/p/w500/uKvVjHNqB5VmOrdxqAt2F7J78ED.jpg',
-    videoId: 'uLtkt8BonwM',
-    platform: 'Max',
-    type: 'drama'
-  },
-  // 한국 콘텐츠
-  {
-    id: 7,
-    title: 'Squid Game',
-    titleLocal: '오징어 게임',
-    country: 'KR',
-    countryName: '한국',
-    year: 2021,
-    rating: 8.0,
-    duration: '60분/에피소드',
-    genre: ['스릴러', '드라마', '서바이벌'],
-    description: '거액의 상금이 걸린 의문의 서바이벌 게임에 참가한 사람들이 목숨을 걸고 경쟁하는 이야기.',
-    poster: 'https://image.tmdb.org/t/p/w500/dDlEmu3EZ0Pgg93K2SVNLCjCSvE.jpg',
-    videoId: 'oqxAJKy0ii4',
-    platform: 'Netflix',
-    type: 'drama'
-  },
-  {
-    id: 8,
-    title: 'Moving',
-    titleLocal: '무빙',
-    country: 'KR',
-    countryName: '한국',
-    year: 2023,
-    rating: 8.6,
-    duration: '50분/에피소드',
-    genre: ['액션', '드라마', 'SF'],
-    description: '초능력을 숨긴 채 살아온 부모들과 물려받은 비밀을 간직한 청소년들의 액션 히어로물.',
-    poster: 'https://image.tmdb.org/t/p/w500/b2S1vWz0iKjSjFpGMlTOeA7Uqen.jpg',
-    videoId: 'NqoevNG7Fi8',
-    platform: 'Disney+',
-    type: 'drama'
-  },
-  {
-    id: 9,
-    title: 'The Glory',
-    titleLocal: '더 글로리',
-    country: 'KR',
-    countryName: '한국',
-    year: 2023,
-    rating: 8.1,
-    duration: '55분/에피소드',
-    genre: ['드라마', '복수', '스릴러'],
-    description: '학교 폭력으로 인생이 파괴된 여자가 17년 만에 가해자들에게 치밀한 복수를 시작한다.',
-    poster: 'https://image.tmdb.org/t/p/w500/oeHY3VY0KRxmjHWSXPE1vCPqUBi.jpg',
-    videoId: 'ocg5L0sAjfs',
-    platform: 'Netflix',
-    type: 'drama'
-  },
-  {
-    id: 10,
-    title: 'Reborn Rich',
-    titleLocal: '재벌집 막내아들',
-    country: 'KR',
-    countryName: '한국',
-    year: 2022,
-    rating: 8.3,
-    duration: '65분/에피소드',
-    genre: ['판타지', '드라마', '시대'],
-    description: '재벌가 비서실장이 재벌 막내아들로 타임슬립해 인생을 다시 사는 판타지 드라마.',
-    poster: 'https://image.tmdb.org/t/p/w500/1bG3wVxN8KjSM7qL7x3mR2pQzY.jpg',
-    videoId: 'K3X7nMfGxYQ',
-    platform: 'TVING',
-    type: 'drama'
-  },
-  {
-    id: 11,
-    title: 'Physical: 100',
-    titleLocal: '피지컬: 100',
-    country: 'KR',
-    countryName: '한국',
-    year: 2023,
-    rating: 7.8,
-    duration: '70분/에피소드',
-    genre: ['예능', '서바이벌', '스포츠'],
-    description: '완벽한 신체를 가진 100인이 가장 강력한 몸을 찾기 위해 벌이는 피지컬 서바이벌.',
-    poster: 'https://image.tmdb.org/t/p/w500/9sVFlFKGKzr7yJjRqJKmP0tDMrQ.jpg',
-    videoId: 'VjR-oiFIlAA',
-    platform: 'TVING',
-    type: 'variety'
-  },
-  {
-    id: 12,
-    title: 'Decision to Leave',
-    titleLocal: '헤어질 결심',
-    country: 'KR',
-    countryName: '한국',
-    year: 2022,
-    rating: 7.6,
-    duration: '138분',
-    genre: ['로맨스', '미스터리', '드라마'],
-    description: '산악 사고 수사를 맡은 형사가 고인의 아내를 만나면서 벌어지는 미스터리 로맨스.',
-    poster: 'https://image.tmdb.org/t/p/w500/u+2F2vE8wOjFqK1Z3yJjIhZ5qBx.jpg',
-    videoId: 'YhTMKz93m8o',
-    platform: 'Watcha',
-    type: 'movie'
-  },
-  // 중국 콘텐츠
-  {
-    id: 13,
-    title: 'The Untamed',
-    titleLocal: '진정령 (The Untamed)',
-    country: 'CN',
-    countryName: '중국',
-    year: 2019,
-    rating: 8.5,
-    duration: '45분/에피소드',
-    genre: ['판타지', '무협', '드라마'],
-    description: '두 수련자가 기이한 사건을 해결하며 우정을 쌓아가는 중국 판타지 무협 드라마.',
-    poster: 'https://image.tmdb.org/t/p/w500/A9GVMouFrUaMSD5x3KRFiXaBYzp.jpg',
-    videoId: 'yEnriVFc1j4',
-    platform: 'Tencent Video',
-    type: 'drama'
-  },
-  {
-    id: 14,
-    title: 'Nirvana in Fire',
-    titleLocal: '낭아방 (Nirvana in Fire)',
-    country: 'CN',
-    countryName: '중국',
-    year: 2015,
-    rating: 9.1,
-    duration: '45분/에피소드',
-    genre: ['사극', '전략', '드라마'],
-    description: '무명 전략가가 복수를 위해 황제의 궁정에 들어가 벌어지는 두뇌 게임과 정치적 음모.',
-    poster: 'https://image.tmdb.org/t/p/w500/mWnUEP8VnQ3f7GwSjFj8tL3xZzR.jpg',
-    videoId: 'c2VxGNFtQnE',
-    platform: 'iQiyi',
-    type: 'drama'
-  },
-  {
-    id: 15,
-    title: 'Story of Yanxi Palace',
-    titleLocal: '연희공략',
-    country: 'CN',
-    countryName: '중국',
-    year: 2018,
-    rating: 8.0,
-    duration: '45분/에피소드',
-    genre: ['사극', '로맨스', '드라마'],
-    description: '청나라 건륭제 시절, 자매의 죽음을 파헤치기 위해 궁에 들어간 여인의 이야기.',
-    poster: 'https://image.tmdb.org/t/p/w500/x2r3J2QY5n3m5tHJlGkC9VxNqen.jpg',
-    videoId: 's6pZ6BrWx8E',
-    platform: 'iQiyi',
-    type: 'drama'
-  },
-  {
-    id: 16,
-    title: 'The Long Season',
-    titleLocal: '만漫长季节 (만漫长的季节)',
-    country: 'CN',
-    countryName: '중국',
-    year: 2023,
-    rating: 9.0,
-    duration: '50분/에피소드',
-    genre: ['미스터리', '드라마', '시대'],
-    description: '중국 동북부 공업도시에서 20년에 걸친 연쇄 사건을 파헤치는 3명의 노년의 이야기.',
-    poster: 'https://image.tmdb.org/t/p/w500/5BhrjxJfPzK1fN7x8VqJ3m2nL4R.jpg',
-    videoId: 'WqvdR8mJLsQ',
-    platform: 'Tencent Video',
-    type: 'drama'
-  },
-  {
-    id: 17,
-    title: 'Word of Honor',
-    titleLocal: '산하령 (Word of Honor)',
-    country: 'CN',
-    countryName: '중국',
-    year: 2021,
-    rating: 8.2,
-    duration: '45분/에피소드',
-    genre: ['무협', '판타지', '드라마'],
-    description: '은퇴한 암살 조직 보스가 우연히 만난 청년과 함께 강호의 비밀을 파헤치는 무협물.',
-    poster: 'https://image.tmdb.org/t/p/w500/kT1VUvq8PnX0Hl3Nq5yF7xM2rLs.jpg',
-    videoId: 'rW3M1jQ4bYk',
-    platform: 'Youku',
-    type: 'drama'
-  },
-  {
-    id: 18,
-    title: 'Heaven Official\'s Blessing',
-    titleLocal: '천관사복 (천관사)',
-    country: 'CN',
-    countryName: '중국',
-    year: 2023,
-    rating: 8.4,
-    duration: '25분/에피소드',
-    genre: ['애니메이션', '판타지', 'BL'],
-    description: '세 번 신계에서 추방된 태자가 귀곡의 신비한 귀신과 만나 펼치는 판타지 로맨스.',
-    poster: 'https://image.tmdb.org/t/p/w500/nGjU6Xp7K9m3Lq1N2p4r5sT8vWx.jpg',
-    videoId: 'YkXbFj325Tk',
-    platform: 'Bilibili',
-    type: 'anime'
-  },
+  // ── 한국: 한국영상자료원 공식 채널(한국고전영화) ──
+  { id: 1, title: 'Homebound', titleLocal: '귀로', country: 'KR', countryName: '한국', year: 1967, duration: '91분', genre: ['멜로', '고전'], description: '이만희 감독의 1967년작. 전쟁의 상처를 안은 부부의 이야기를 그린 멜로드라마.', videoId: 'CoIzk2usMMg', source: '한국고전영화 Korean Classic Film', license: 'official', type: 'movie' },
+  { id: 2, title: "Sisters' Garden", titleLocal: '자매의 화원', country: 'KR', countryName: '한국', year: 1959, duration: '120분', genre: ['멜로', '고전', '4K'], description: '신상옥 감독의 1959년작 멜로드라마. 4K 복원판.', videoId: 'AxraJIX5PQI', source: '한국고전영화 Korean Classic Film', license: 'official', type: 'movie' },
+  { id: 3, title: 'A Happy Businesswoman', titleLocal: '또순이', country: 'KR', countryName: '한국', year: 1963, duration: '93분', genre: ['코미디', '고전'], description: '부제 "행복의 탄생". 억척스럽고 생활력 강한 여성 또순이의 성공기를 그린 코미디.', videoId: 'hc2BqMbb2EA', source: '한국고전영화 Korean Classic Film', license: 'official', type: 'movie' },
+  { id: 4, title: 'Mr. Park', titleLocal: '박서방', country: 'KR', countryName: '한국', year: 1960, duration: '139분', genre: ['가족', '고전'], description: '김승호 주연. 연탄 배달로 가족을 키운 아버지와 자식 세대의 갈등을 그린 가족 드라마.', videoId: 'GTjIZvR6M0M', source: '한국고전영화 Korean Classic Film', license: 'official', type: 'movie' },
+  { id: 5, title: 'The Gingko Bed', titleLocal: '은행나무 침대', country: 'KR', countryName: '한국', year: 1995, duration: '88분', genre: ['판타지', '멜로', '4K'], description: '강제규 감독 데뷔작. 천 년의 시간을 넘어 이어지는 사랑을 그린 판타지 멜로. 4K 복원판.', videoId: '_1qpiMzEvrA', source: '한국고전영화 Korean Classic Film', license: 'official', type: 'movie' },
+  { id: 6, title: 'To the Starry Island', titleLocal: '그 섬에 가고싶다', country: 'KR', countryName: '한국', year: 1993, duration: '100분', genre: ['드라마', '4K'], description: '박광수 감독작. 한 섬마을 사람들의 삶과 아픈 역사를 담은 드라마. 4K 복원판.', videoId: 'Y6D136RHiVc', source: '한국고전영화 Korean Classic Film', license: 'official', type: 'movie' },
+
+  // ── 한국: 방송사 공식 채널 (몰아보기·요약본) ──
+  { id: 7, title: 'Jewel in the Palace (Ep.1-4)', titleLocal: '대장금 1~4회 몰아보기', country: 'KR', countryName: '한국', year: 2003, duration: '150분', genre: ['사극', '드라마'], description: 'MBC 사극 「대장금」 1~4회를 이어 붙인 공식 몰아보기 영상.', videoId: 'JzAOM5EvsX4', source: '옛드 (MBC 공식)', license: 'official', type: 'drama' },
+  { id: 8, title: 'Moon of Seoul (Ep.1-3)', titleLocal: '서울의 달 1~3회 몰아보기', country: 'KR', countryName: '한국', year: 1994, duration: '74분', genre: ['드라마'], description: '최민식·한석규 주연 MBC 드라마 「서울의 달」 1~3회 공식 몰아보기.', videoId: '5eh8aL2Vr30', source: '옛드 (MBC 공식)', license: 'official', type: 'drama' },
+  { id: 9, title: 'Summer Scent (Ep.1-4 요약)', titleLocal: '여름향기 1~4회 요약', country: 'KR', countryName: '한국', year: 2003, duration: '43분', genre: ['멜로', '드라마'], description: 'KBS 드라마 「여름향기」 1~4회를 40분으로 요약한 공식 영상.', videoId: '2I388WYbr4U', source: 'KBS Drama Classic', license: 'official', type: 'drama' },
+  { id: 10, title: 'Stairway to Heaven (Ep.1-6 요약)', titleLocal: '천국의 계단 1~6회 정주행', country: 'KR', countryName: '한국', year: 2003, duration: '64분', genre: ['멜로', '드라마'], description: 'SBS 드라마 「천국의 계단」 1~6회를 한 번에 보는 공식 요약 영상.', videoId: 'aasYVxGlXds', source: 'SBS', license: 'official', type: 'drama' },
+
+  // ── 중국: 제작사·플랫폼 공식 채널 ──
+  { id: 11, title: 'Story of Yanxi Palace EP01', titleLocal: '연희공략 1화', country: 'CN', countryName: '중국', year: 2018, duration: '45분', genre: ['사극', '궁중'], description: '청나라 궁궐에 들어간 궁녀 위영락의 이야기. 제작사 공식 채널 영어자막판 1화.', videoId: 'uCLoJTZ8YXg', source: '欢娱影视 China Huanyu Ent. (공식)', license: 'official', type: 'drama' },
+  { id: 12, title: 'The Untamed EP01', titleLocal: '진정령 1화', country: 'CN', countryName: '중국', year: 2019, duration: '42분', genre: ['판타지', '무협'], description: '샤오잔·왕이보 주연 무협 판타지. 텐센트 공식 채널 영어자막판 1화.', videoId: 'BfKhREVFLkQ', source: '腾讯视频 WeTV (공식)', license: 'official', type: 'drama' },
+  { id: 13, title: 'Word of Honor EP01', titleLocal: '산하령 1화', country: 'CN', countryName: '중국', year: 2021, duration: '44분', genre: ['무협', '드라마'], description: '장철한·공준 주연 무협 드라마. 유쿠 공식 채널 영어자막판 1화.', videoId: '1Vf7l1_M8Tw', source: 'YOUKU English (공식)', license: 'official', type: 'drama' },
+
+  // ── 미국: 저작권 만료(퍼블릭 도메인) 고전 영화 ──
+  { id: 14, title: 'Night of the Living Dead', titleLocal: '살아있는 시체들의 밤', country: 'US', countryName: '미국', year: 1968, duration: '95분', genre: ['호러', '고전'], description: '조지 A. 로메로 감독의 좀비 영화 원조. 저작권이 만료된 퍼블릭 도메인 작품.', videoId: 'H91BxkBXttE', source: 'Timeless Classic Movies', license: 'public-domain', type: 'movie' },
+  { id: 15, title: 'The General', titleLocal: '제너럴', country: 'US', countryName: '미국', year: 1926, duration: '79분', genre: ['코미디', '무성영화'], description: '버스터 키튼의 무성 코미디 걸작. 남북전쟁 중 기관차를 되찾으려는 기관사의 활약. 퍼블릭 도메인.', videoId: 'D_UdtS-8QS0', source: 'Laurel & Hardy', license: 'public-domain', type: 'movie' },
+  { id: 16, title: 'His Girl Friday', titleLocal: '연인 프라이데이', country: 'US', countryName: '미국', year: 1940, duration: '92분', genre: ['코미디', '고전'], description: '하워드 혹스 감독, 캐리 그랜트 주연의 스크루볼 코미디. 퍼블릭 도메인.', videoId: 'kmYcT5gT6a4', source: 'Retrospective - Classic Movies', license: 'public-domain', type: 'movie' },
+  { id: 17, title: 'Charade', titleLocal: '샤레이드', country: 'US', countryName: '미국', year: 1963, duration: '113분', genre: ['미스터리', '로맨스'], description: '오드리 헵번·캐리 그랜트 주연 로맨틱 미스터리. 퍼블릭 도메인.', videoId: '-uc86VH8hdA', source: 'FEATURE FILM', license: 'public-domain', type: 'movie' },
 ];
 
 function App() {
   const [searchTerm, setSearchTerm] = useState('');
   const [activeFilter, setActiveFilter] = useState<'all' | 'US' | 'KR' | 'CN'>('all');
-  const [activeType, setActiveType] = useState<'all' | 'movie' | 'drama' | 'variety' | 'anime'>('all');
+  const [activeType, setActiveType] = useState<'all' | 'movie' | 'drama'>('all');
   const [selectedContent, setSelectedContent] = useState<Content | null>(null);
 
   const filteredContents = useMemo(() => {
@@ -343,8 +79,6 @@ function App() {
     { key: 'all' as const, label: '전체', icon: <Globe size={14} /> },
     { key: 'movie' as const, label: '영화', icon: <Film size={14} /> },
     { key: 'drama' as const, label: '드라마', icon: <Tv size={14} /> },
-    { key: 'variety' as const, label: '예능', icon: <Star size={14} /> },
-    { key: 'anime' as const, label: '애니', icon: <TrendingUp size={14} /> },
   ];
 
   return (
@@ -364,7 +98,7 @@ function App() {
               <h1 className="text-2xl font-bold bg-gradient-to-r from-violet-400 to-pink-400 bg-clip-text text-transparent">
                 baroOTT
               </h1>
-              <p className="text-xs text-gray-400">가입없이 바로보기</p>
+              <p className="text-xs text-gray-400">공식 무료 콘텐츠 모음</p>
             </div>
           </div>
           <div className="hidden md:flex items-center gap-2 text-sm text-gray-400 bg-white/5 px-3 py-1.5 rounded-full">
@@ -391,7 +125,7 @@ function App() {
             transition={{ delay: 0.1 }}
             className="text-gray-400 text-base md:text-lg mb-8"
           >
-            미국 · 한국 · 중국 OTT 콘텐츠를 가입 없이 바로 감상
+            공식 채널에 무료 공개된 한국 · 중국 작품과 저작권이 만료된 미국 고전 영화
           </motion.p>
 
           {/* Search Bar */}
@@ -482,13 +216,15 @@ function App() {
                 className="group cursor-pointer relative rounded-xl overflow-hidden bg-white/[0.02] border border-white/5 hover:border-violet-500/30 transition-all duration-300"
               >
                 {/* Poster */}
-                <div className="relative aspect-[2/3] overflow-hidden">
+                <div className="relative aspect-video overflow-hidden bg-gradient-to-br from-violet-900/40 to-gray-900">
                   <img
-                    src={content.poster}
-                    alt={content.title}
+                    src={thumb(content.videoId)}
+                    alt={content.titleLocal}
+                    loading="lazy"
                     className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
                     onError={(e) => {
-                      (e.target as HTMLImageElement).src = `https://via.placeholder.com/300x450/1a1a2e/ffffff?text=${encodeURIComponent(content.titleLocal)}`;
+                      // 썸네일이 없으면 이미지 숨기고 배경 그라데이션만 표시
+                      (e.target as HTMLImageElement).style.visibility = 'hidden';
                     }}
                   />
                   {/* Overlay */}
@@ -509,15 +245,14 @@ function App() {
                   </div>
                   {/* Rating */}
                   <div className="absolute top-2 right-2">
-                    <span className="text-xs px-2 py-0.5 rounded-full bg-yellow-500/90 text-black font-bold flex items-center gap-0.5">
-                      <Star size={10} className="fill-black" />
-                      {content.rating}
+                    <span className="text-[10px] px-2 py-0.5 rounded-full bg-emerald-500/90 text-black font-bold">
+                      {content.license === 'official' ? '공식' : 'PD'}
                     </span>
                   </div>
                   {/* Platform */}
                   <div className="absolute bottom-2 left-2">
                     <span className="text-[10px] px-2 py-0.5 rounded-full bg-white/10 backdrop-blur-sm text-gray-200 border border-white/10">
-                      {content.platform}
+                      {content.type === 'movie' ? '영화' : '드라마'}
                     </span>
                   </div>
                 </div>
@@ -599,7 +334,7 @@ function App() {
                   <div className="flex-1">
                     <div className="flex items-center gap-2 mb-2">
                       <span className="text-xs px-2 py-0.5 rounded-full bg-violet-500/20 text-violet-300 border border-violet-500/30">
-                        {selectedContent.platform}
+                        {selectedContent.license === 'official' ? '공식 채널' : '퍼블릭 도메인'}
                       </span>
                       <span className="text-xs px-2 py-0.5 rounded-full bg-white/5 text-gray-400 border border-white/10">
                         {selectedContent.country === 'US' ? '🇺🇸 미국' : selectedContent.country === 'KR' ? '🇰🇷 한국' : '🇨🇳 중국'}
@@ -617,11 +352,15 @@ function App() {
 
                 {/* Meta Info */}
                 <div className="flex flex-wrap items-center gap-4 mt-4 pt-4 border-t border-white/5">
-                  <div className="flex items-center gap-1.5 text-sm text-gray-400">
-                    <Star size={14} className="text-yellow-400 fill-yellow-400" />
-                    <span className="text-white font-semibold">{selectedContent.rating}</span>
-                    <span>/10</span>
-                  </div>
+                  <a
+                    href={`https://www.youtube.com/watch?v=${selectedContent.videoId}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="flex items-center gap-1.5 text-sm text-gray-400 hover:text-white"
+                  >
+                    <ChevronRight size={14} />
+                    <span>출처: {selectedContent.source} (YouTube에서 보기)</span>
+                  </a>
                   <div className="flex items-center gap-1.5 text-sm text-gray-400">
                     <Calendar size={14} />
                     <span>{selectedContent.year}</span>
@@ -655,7 +394,7 @@ function App() {
               <span className="font-bold text-gray-300">baroOTT</span>
             </div>
             <p className="text-xs text-gray-500 text-center">
-              ⚠️ 테스트용 사이트입니다. 영상은 YouTube 프리뷰/트레일러를 제공합니다.
+              모든 영상은 권리자 공식 YouTube 채널 또는 저작권 만료(퍼블릭 도메인) 작품을 YouTube 임베드로 재생합니다.
             </p>
             <p className="text-xs text-gray-600">
               © 2026 baroOTT Test
